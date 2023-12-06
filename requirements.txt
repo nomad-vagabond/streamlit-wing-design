@@ -1,0 +1,6 @@
+streamlit==1.28.0 # version 1.29.0 contain bug that sets html background to white
+markdown
+yattag
+pandas
+dict_hash
+git+https://github.com/nomad-vagabond/cq-uav.git@0.0.2
