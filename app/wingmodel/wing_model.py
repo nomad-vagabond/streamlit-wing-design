@@ -57,17 +57,18 @@ class WingModelManager:
             geom_props = self.eval_geom_props(cad_model)
             static_props = self.eval_static_props(cad_model)
             dynamic_props = self.eval_dynamic_props(cad_model, static_props["total_mass"])
+            strength_props = self.eval_strength_props(cad_model, dynamic_props['bend_force'])
             
             models_data = self._cache_stl_models(cad_model, render_type, colors)
-            model_props = self._cache_model_props(geom_props, static_props, dynamic_props)
+            model_props = self._cache_model_props(geom_props, static_props, dynamic_props, strength_props)
             self._cache_stl_zipfile(models_data)
             self._cache_step_model(cad_model)
 
         self.models_data = models_data
         self.model_props = model_props
 
-    def _cache_model_props(self, geom_props, static_props, dynamic_props):
-        model_props = {**self.input_params, **geom_props, **static_props, **dynamic_props}
+    def _cache_model_props(self, geom_props, static_props, dynamic_props, strength_props):
+        model_props = {**self.input_params, **geom_props, **static_props, **dynamic_props, **strength_props}
         with open(self.props_path, "w", newline='') as csvfile:
             writer = csv.DictWriter(csvfile, fieldnames=model_props.keys())
             writer.writeheader()
@@ -156,7 +157,7 @@ class WingModelManager:
         return cad_model
 
     def eval_geom_props(self, cad_model):
-        Ixx, Iyy, Izz = cad_model.box_section.eval_inertia_moments()
+        Ixx, Iyy, Izz = cad_model.box_section.inertia_moments
 
         geom_props = {
             "area": cad_model.length * cad_model.chord * 1e-6, # [m^2]
@@ -255,6 +256,19 @@ class WingModelManager:
         }
 
         return dynamic_props
+
+    def eval_strength_props(self, cad_model, bend_force):
+        bend_stress = cad_model.get_max_bend_stress(bend_force)
+        shear_stress = cad_model.get_max_shear_stress(bend_force)
+        von_mises_stress = math.sqrt(bend_stress**2 + 3*shear_stress**2)
+
+        strength_props = {
+            'bend_stress': bend_stress,
+            'shear_stress': shear_stress,
+            'von_mises_stress': von_mises_stress
+        }
+
+        return strength_props
 
     def _cache_step_model(self, cad_model):
         cq_color = lambda part: cq.Color(*hex_to_rgb(MODEL_COLORS[part]), 1)

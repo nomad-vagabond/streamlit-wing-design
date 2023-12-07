@@ -76,17 +76,24 @@ def _static_stats(wing_console):
     specific_load = model_props["specific_load"]
     bend_force = model_props["bend_force"]
 
+    bend_stress = float(model_props["bend_stress"])*1e-6
+    shear_strss = float(model_props["shear_stress"])*1e-6
+    von_mises_stress = float(model_props["von_mises_stress"])*1e-6
+    safety = float(model_props["box_tensile_strength"]) / von_mises_stress
     nu_max = wing_console.get_max_bend_displacement()
 
     col1, col2, col3 = st.columns(3)
     with col1: # geom
         st.text(
+            f"Wing tip deflection:\n"
+            f"    h = {nu_max:.2f} [mm] \n"
+            f"    Δ = {100*nu_max/span:.2f} [%] \n\n"
             f"Chord: {chord:.2f} [mm] \n"
             f"Profile height: {profile_height:.2f} [mm] \n\n"
             f"Shell thickness: {shell_thickness:.2f} [mm] \n"
-            f"Box thickness: {box_thickness:.2f} [mm] \n\n"
+            f"Box thickness: {box_thickness:.2f} [mm] \n"
             f"Box Ixx: {box_Ixx:.2f} [mm^4] \n"
-            f"Box Iyy: {box_Iyy:.2f} [mm^4] \n"
+            # f"Box Iyy: {box_Iyy:.2f} [mm^4] \n"
         )
     with col2: #phys
         st.text(
@@ -99,10 +106,12 @@ def _static_stats(wing_console):
         )
     with col3:
         st.text(
-            f"Wing tip deflection:\n"
-            f"    h = {nu_max:.2f} [mm] \n"
-            f"    Δ = {100*nu_max/span:.2f} [%] \n"
+            f"Max bend stress: {bend_stress:.2f} [MPa] \n"
+            f"Max shear stress: {shear_strss:.2f} [MPa] \n"
+            f"Von Mises stress: {von_mises_stress:.2f} [MPa] \n"
+            f"Safety factor: {safety:.2f}"
         )
+
 
 
 def _section_preview(models_data, alpha=0):
