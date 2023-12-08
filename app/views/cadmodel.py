@@ -30,6 +30,8 @@ def build_model_view(airfoils_data, geom_params, phys_params, dyn_params):
         lift = model_props["lift_force"]
         lift_to_weight = model_props["lift_to_weight"]
 
+        ltw_icon = FAIL_ICON if lift_to_weight<=1 else OK_ICON
+
         _models_preview(wing_console.models_data)
         col1, col2 = st.columns([8,4])
 
@@ -39,7 +41,7 @@ def build_model_view(airfoils_data, geom_params, phys_params, dyn_params):
                 f"Excess lift force: {lift:.2f} [N] \n"
                 f"Console mass: {console_mass:.2f} [kg] \n"
                 f"    shell: {shell_rel_mass:.2f}%, foam: {foam_rel_mass:.2f}%, box: {box_rel_mass:.2f}% \n"
-                f"Lift to weight ratio: {lift_to_weight:.2f}"
+                f"{ltw_icon} Lift to weight ratio: {lift_to_weight:.2f}"
             )
             st.button(label=f"Download Full Data")
 

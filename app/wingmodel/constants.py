@@ -5,11 +5,17 @@ import math
 
 AIR_DENSITY = 1.225 #[kg/m^3]
 AIR_KINEMATIC_VISCOSITY = 1.516*1e-5 # [m^/s], at 20 degrees C
-
-
-DELTA_MAX = 0.1 ## relative wing tip displacement
 G = 9.81 ## [m/s**2]
+
+## Wing model parameters
+
+DELTA_MAX = 0.1 ## maximal relative wing tip displacement
 LOAD_FACTOR = 1.0
+MIN_SAFETY_FACTOR = 1.5
+
+WARNING_ICON = "⚠️"
+FAIL_ICON = "❌"
+OK_ICON = "✅"
 
 
 ## Geometry

@@ -52,5 +52,6 @@ Airfoil shapes are approximated with smoothing B-Splines, while sharp tails are 
 
 5. A browser window (tab) with the app should appear.
 
+---
 
 Inspired by [obeliskterrain](https://github.com/medicationforall/obeliskterrainapp/tree/main)

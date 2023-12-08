@@ -81,19 +81,21 @@ def _static_stats(wing_console):
     von_mises_stress = float(model_props["von_mises_stress"])*1e-6
     safety = float(model_props["box_tensile_strength"]) / von_mises_stress
     nu_max = wing_console.get_max_bend_displacement()
+    nu_max_rel = nu_max/span
+
+    nu_icon = FAIL_ICON if nu_max_rel<0 else (WARNING_ICON if nu_max_rel>DELTA_MAX else OK_ICON)
+    safety_icon = FAIL_ICON if safety<1 else (WARNING_ICON if safety<MIN_SAFETY_FACTOR else OK_ICON)
 
     col1, col2, col3 = st.columns(3)
     with col1: # geom
         st.text(
-            f"Wing tip deflection:\n"
+            f"{nu_icon} Wing tip deflection:\n"
             f"    h = {nu_max:.2f} [mm] \n"
-            f"    Δ = {100*nu_max/span:.2f} [%] \n\n"
+            f"    Δ = {100*nu_max_rel:.2f} [%] \n\n"
             f"Chord: {chord:.2f} [mm] \n"
-            f"Profile height: {profile_height:.2f} [mm] \n\n"
+            f"Profile height: {profile_height:.2f} [mm] \n"
             f"Shell thickness: {shell_thickness:.2f} [mm] \n"
             f"Box thickness: {box_thickness:.2f} [mm] \n"
-            f"Box Ixx: {box_Ixx:.2f} [mm^4] \n"
-            # f"Box Iyy: {box_Iyy:.2f} [mm^4] \n"
         )
     with col2: #phys
         st.text(
@@ -104,15 +106,13 @@ def _static_stats(wing_console):
             f"    Foam: {foam_mass:.2f} [kg] \n"
             f"    Box: {box_mass:.2f} [kg]"
         )
-    with col3:
+    with col3: #stress
         st.text(
             f"Max bend stress: {bend_stress:.2f} [MPa] \n"
             f"Max shear stress: {shear_strss:.2f} [MPa] \n"
             f"Von Mises stress: {von_mises_stress:.2f} [MPa] \n"
-            f"Safety factor: {safety:.2f}"
+            f"{safety_icon} Safety factor: {safety:.2f}"
         )
-
-
 
 def _section_preview(models_data, alpha=0):
     doc, tag, text, line = ttl = Doc().ttl()
