@@ -40,7 +40,7 @@ def build_model_view(airfoils_data, geom_params, phys_params, dyn_params):
                 f"Aspect ratio: {aspect_ratio:.2f} \n"
                 f"Excess lift force: {lift:.2f} [N] \n"
                 f"Console mass: {console_mass:.2f} [kg] \n"
-                f"    shell: {shell_rel_mass:.2f}%, foam: {foam_rel_mass:.2f}%, box: {box_rel_mass:.2f}% \n"
+                f"    shell: {shell_rel_mass:.2f}%, frame: {foam_rel_mass:.2f}%, box: {box_rel_mass:.2f}% \n"
                 f"{ltw_icon} Lift to weight ratio: {lift_to_weight:.2f}"
             )
             st.button(label=f"Download Full Data")

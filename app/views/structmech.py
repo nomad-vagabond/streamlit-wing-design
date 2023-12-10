@@ -103,7 +103,7 @@ def _static_stats(wing_console):
             f"Total bend force: {bend_force:.2f} [N] \n\n"
             f"Console mass: {console_mass:.2f} [kg] \n"
             f"    Shell: {shell_mass:.2f} [kg] \n"
-            f"    Foam: {foam_mass:.2f} [kg] \n"
+            f"    Frame: {foam_mass:.2f} [kg] \n"
             f"    Box: {box_mass:.2f} [kg]"
         )
     with col3: #stress
