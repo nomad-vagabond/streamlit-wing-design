@@ -1,4 +1,4 @@
-import os, time, json, sys, re
+import os, time, json, sys, re, shutil
 from uuid import uuid4
 import glob
 import time
@@ -25,7 +25,7 @@ def _initialize_session():
         st.session_state['session_id'] = uuid4()
 
 
-def _clean_cahe():
+def _clean_cache():
     now = time.time()
     for filename in os.listdir(CACHE_DIR):
         filepath = os.path.join(CACHE_DIR, filename)
@@ -41,18 +41,24 @@ def _clean_cahe():
             print(f"Removed cached file {filename}")
 
 
-def __clean_up_static_files():
-    files = glob.glob("app/static/*.stl")
-    today = datetime.today()
-    for file_name in files:
-        file_path = Path(file_name)
-        modified = file_path.stat().st_mtime
-        modified_date = datetime.fromtimestamp(modified)
-        delta = today - modified_date
-        #print('total seconds '+str(delta.total_seconds()))
-        if delta.total_seconds() > 1200: # 20 minutes
-            #print('removing '+file_name)
-            file_path.unlink()
+def _clean_stl_models():
+    now = time.time()
+    for dirname in os.listdir(STL_MODELS_DIR):
+        dir_path = os.path.join(STL_MODELS_DIR, dirname)
+
+        if not os.path.isdir(dir_path):
+            continue
+
+        dirstamp = os.stat(dir_path).st_mtime
+
+        if default_model_name_pattern.search(dirname):
+            threshold = now - DEFAULT_MODEL_CACHE_LIFETIME_SECONDS
+        else:
+            threshold = now - CACHE_LIFETIME_SECONDS
+
+        if dirstamp < threshold:
+            shutil.rmtree(dir_path)
+            print(f"Removed stl models directory {dirname}")
 
 
 if __name__ == "__main__":
@@ -66,5 +72,5 @@ if __name__ == "__main__":
     geom_params, phys_params, dyn_params = build_toolbar(airfoils_data)
     build_dashboard(airfoils_data, geom_params, phys_params, dyn_params)
     
-    # __clean_up_static_files()
-    _clean_cahe()
+    _clean_stl_models()
+    _clean_cache()
