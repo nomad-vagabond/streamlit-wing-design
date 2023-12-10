@@ -50,6 +50,9 @@ class WingModelManager:
         if not os.path.isdir(self.stl_path):
             os.makedirs(self.stl_path)
 
+        if not os.path.isdir(CACHE_DIR):
+            os.makedirs(CACHE_DIR)
+
         self.stl_zip_path = os.path.join(CACHE_DIR, f"wing-console-{self.model_hash}-stl.zip")
         self.step_path = os.path.join(CACHE_DIR, f"wing-console-{self.model_hash}.step")
         self.props_hash = sha256(self.input_params)

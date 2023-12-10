@@ -1,0 +1,8 @@
+version: '0.1'
+services:
+  streamlit:
+    build: .
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./:/opt/st-wing-design/
