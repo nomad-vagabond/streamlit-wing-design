@@ -10,6 +10,8 @@ from .structmech import build_structmech_view
 def build_toolbar(airfoils_data):
     with st.sidebar:
         st.title('Wing Console Generator')
+        st.markdown("Rectangular Wing (v1.0)")
+
         geom_params = {}
 
         st.markdown("## Geometry")

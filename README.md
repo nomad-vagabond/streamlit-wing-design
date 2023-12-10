@@ -1,8 +1,10 @@
 # UAV Wing Console Generator
 
-Rectangular Wing Console (v0.1)
+Rectangular Wing Console (v1.0)
 
 Streamlit app based on the [CQ-UAV](https://github.com/nomad-vagabond/cq-uav) library for generation of UAV components with [CadQuery](https://github.com/CadQuery/cadquery) and [SplineCloud](https://splinecloud.com/).
+
+![](app/img/sc-cq-st.png)
 
 ---
 
@@ -16,8 +18,7 @@ Streamlit app based on the [CQ-UAV](https://github.com/nomad-vagabond/cq-uav) li
 - only the wing box section accepts aerodynamic load, which is applied along the central line of the wing box;
 - pure box bending is considered;
 - wing console is fixed on one of its ends, another end is free;
-- wing materials are isotropic;
-- the weights of all wing components are considered.
+- wing materials are isotropic.
 
 ### Geometry
 
@@ -36,15 +37,34 @@ Airfoil shapes are approximated with smoothing B-Splines, while sharp tails are 
 
 1. Clone this repository with git
 
-2. Open terminal
+2. Open terminal and `cd` to th cloned repository
 
-3. Install dependencies
+Using docker-compose
+
+3. In terminal
+
+```
+docker-compose up --build
+```
+4. In browser go to `http://localhost:8501/``
+
+Using virtual environment
+
+3. Create virtual environment
+
+```
+python -m venv venv
+```
+
+4. Install dependencies
 
     ```
+    . ./venv/bin/activate
+
     pip install -r requirements.txt
     ```
 
-4. Run the streamlit app
+5. Run the streamlit app
 
     ```
     streamlit run app/app.py
