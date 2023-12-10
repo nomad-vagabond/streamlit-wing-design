@@ -95,7 +95,7 @@ def _model_display_options():
     with foam_col:
         col1, col2 = st.columns([2,8])
         with col2:
-            st.markdown("Foam")
+            st.markdown("Frame")
         with col1:
             colors["foam"] = st.color_picker('Foam Color', MODEL_COLORS['foam'], label_visibility="collapsed")
         render_type["foam"] = st.selectbox("Foam Display", options, 

@@ -3,4 +3,4 @@ markdown
 yattag
 pandas
 dict_hash
-git+https://github.com/nomad-vagabond/cq-uav.git@0.0.3
+git+https://github.com/nomad-vagabond/cq-uav.git@0.0.6

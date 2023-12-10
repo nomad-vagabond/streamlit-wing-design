@@ -28,6 +28,8 @@ def build_toolbar(airfoils_data):
         geom_params["airfoil_type"] = st.selectbox("Airfoil", airfoil_types, index=airfoil_ind)
         geom_params["chord"] = st.slider("Chord", min_value=CHORD_MIN, max_value=CHORD_MAX, value=CHORD_DEFAULT, step=5)
         geom_params["span"] = st.slider("Span", min_value=SPAN_MIN, max_value=SPAN_MAX, value=SPAN_DEFAULT, step=5)
+        geom_params["shell_thickness"] = st.slider("Shell Thickness", min_value=1, max_value=3, value=1, step=1)
+        geom_params['lattice'] = st.checkbox('Lattice Frame')
         st.divider()
 
         st.markdown("## Dynamics")
@@ -36,7 +38,7 @@ def build_toolbar(airfoils_data):
             "Velocity, [m/s]", min_value=1.0, max_value=100.0, 
             value=35.0, step=1.0
         )
-        dyn_params["aoa_type"] = st.selectbox("Airfoil", ["Max Quality", "Max Lift", "Min Drag"])
+        dyn_params["aoa_type"] = st.selectbox("Angle of Attack", ["Max Quality", "Max Lift", "Min Drag"])
 
         st.divider()
         st.markdown("## Material Properties")

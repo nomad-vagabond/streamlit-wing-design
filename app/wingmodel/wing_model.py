@@ -37,7 +37,14 @@ class WingModelManager:
         velocity = dyn_params['velocity']
         self.fluid_props = FluidProperties(AIR_DENSITY, velocity, AIR_KINEMATIC_VISCOSITY)
 
-        hash_keys = [geom_params["airfoil_type"], geom_params["chord"], geom_params["span"]]
+        hash_keys = [
+            geom_params["airfoil_type"], 
+            geom_params["chord"], 
+            geom_params["span"], 
+            geom_params["shell_thickness"],
+            str(int(geom_params["lattice"]))
+        ]
+
         self.model_hash = "-".join(map(str, hash_keys))
         self.stl_path = os.path.join(STL_MODELS_DIR, f"wing-console-{self.model_hash}")
         if not os.path.isdir(self.stl_path):
@@ -149,9 +156,12 @@ class WingModelManager:
     def generate_cad_model(self, geom_params):
         chord = self.input_params["chord"]
         span = self.input_params["span"]
+        shell_thickness = self.input_params["shell_thickness"]
+        lattice = self.input_params["lattice"]
         airfoil_section = AirfoilSection(self.airfoil, chord=chord)
-        cad_model = RectangularWingConsole(airfoil_section, length=span, 
-            min_length=SPAN_MIN, max_length=SPAN_MAX, min_chord=CHORD_MIN, max_chord=CHORD_MAX
+        cad_model = RectangularWingConsole(airfoil_section, length=span,
+            min_length=SPAN_MIN, max_length=SPAN_MAX, min_chord=CHORD_MIN, max_chord=CHORD_MAX,
+            shell_thickness=shell_thickness, make_lattice=lattice
         )
 
         return cad_model
