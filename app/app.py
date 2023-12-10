@@ -1,4 +1,4 @@
-import os, time, json
+import os, time, json, sys, re
 from uuid import uuid4
 import glob
 import time
@@ -9,7 +9,12 @@ import pkg_resources
 import streamlit as st
 
 from views import build_toolbar, build_dashboard
-from wingmodel.constants import CACHE_DIR, CACHE_LIFETIME_SECONDS
+from wingmodel.constants import *
+
+
+sys.stdout.flush()
+
+default_model_name_pattern = re.compile(f"(?=.*2412.*{CHORD_DEFAULT}-{SPAN_DEFAULT}-1-0)")
 
 
 def _initialize_session():
@@ -23,10 +28,17 @@ def _initialize_session():
 def _clean_cahe():
     now = time.time()
     for filename in os.listdir(CACHE_DIR):
-        filestamp = os.stat(os.path.join(CACHE_DIR, filename)).st_mtime
-        threshold = now - CACHE_LIFETIME_SECONDS
+        filepath = os.path.join(CACHE_DIR, filename)
+        filestamp = os.stat(filepath).st_mtime
+
+        if default_model_name_pattern.search(filename):
+            threshold = now - DEFAULT_MODEL_CACHE_LIFETIME_SECONDS
+        else:
+            threshold = now - CACHE_LIFETIME_SECONDS
+        
         if filestamp < threshold:
-            print(filename)
+            os.remove(filepath)
+            print(f"Removed cached file {filename}")
 
 
 def __clean_up_static_files():
@@ -53,6 +65,6 @@ if __name__ == "__main__":
 
     geom_params, phys_params, dyn_params = build_toolbar(airfoils_data)
     build_dashboard(airfoils_data, geom_params, phys_params, dyn_params)
-
+    
     # __clean_up_static_files()
-    # _clean_cahe()
+    _clean_cahe()
