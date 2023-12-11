@@ -2,6 +2,7 @@ import math
 import csv
 import json
 from dict_hash import sha256
+import time
 
 import cadquery as cq
 import zipfile
@@ -134,6 +135,7 @@ class WingModelManager:
                     "name": model["name"],
                     "rendr_type": render_type[model["part"]],
                     "part": model["part"],
+                    "time": str(time.time())
                 }
             )
 
