@@ -31,7 +31,7 @@ def build_toolbar(airfoils_data):
         geom_params["chord"] = st.slider("Chord", min_value=CHORD_MIN, max_value=CHORD_MAX, value=CHORD_DEFAULT, step=5)
         geom_params["span"] = st.slider("Span", min_value=SPAN_MIN, max_value=SPAN_MAX, value=SPAN_DEFAULT, step=5)
         geom_params["shell_thickness"] = st.slider("Shell Thickness", min_value=1, max_value=3, value=1, step=1)
-        geom_params['lattice'] = st.checkbox('Lattice Frame')
+        geom_params['lattice'] = st.toggle('Lattice Frame')
         st.divider()
 
         st.markdown("## Dynamics")
