@@ -1,5 +1,5 @@
 
-app/static/**/
+app/static/*.stl
 app/cache/*
 
 # Byte-compiled / optimized / DLL files
