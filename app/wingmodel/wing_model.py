@@ -3,7 +3,7 @@ import csv
 import json
 from dict_hash import sha256
 import time
-import hashlib
+from slugify import slugify
 
 import cadquery as cq
 import zipfile
@@ -39,8 +39,9 @@ class WingModelManager:
         velocity = dyn_params['velocity']
         self.fluid_props = FluidProperties(AIR_DENSITY, velocity, AIR_KINEMATIC_VISCOSITY)
 
+        self.airfoil_type_hash = slugify(geom_params["airfoil_type"])
         hash_keys = [
-            hashlib.md5(geom_params["airfoil_type"].encode('utf-8')).hexdigest(),
+            self.airfoil_type_hash,
             geom_params["chord"], 
             geom_params["span"], 
             geom_params["shell_thickness"],
@@ -50,8 +51,8 @@ class WingModelManager:
         self.model_hash = "-".join(map(str, hash_keys))
 
         self.stl_path = os.path.join(STL_MODELS_DIR, f"wing-console-{self.model_hash}")
-        # if not os.path.isdir(self.stl_path):
-        #     os.makedirs(self.stl_path)
+        if not os.path.isdir(self.stl_path):
+            os.makedirs(self.stl_path)
 
         if not os.path.isdir(CACHE_DIR):
             os.makedirs(CACHE_DIR)
@@ -126,8 +127,8 @@ class WingModelManager:
 
         models_data = []
         for model in models:
-            # stl_model_path = os.path.join(self.stl_path, f'{model["name"]}.stl')
-            stl_model_path = os.path.join(STL_MODELS_DIR, f'{model["name"]}.stl')
+            stl_model_path = os.path.join(self.stl_path, f'{model["name"]}.stl')
+            # stl_model_path = os.path.join(STL_MODELS_DIR, f'{model["name"]}.stl')
 
             cq.exporters.export(model['model'], stl_model_path, tolerance=1e-4)
             models_data.append(
@@ -137,7 +138,7 @@ class WingModelManager:
                     "name": model["name"],
                     "rendr_type": render_type[model["part"]],
                     "part": model["part"],
-                    "time": str(time.time())
+                    # "time": str(time.time())
                 }
             )
 
