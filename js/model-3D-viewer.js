@@ -76,7 +76,8 @@ class STLViewer extends HTMLElement {
             };
 
         for (let i in models) {
-            await loader.loadAsync(models[i]["path"]).then(( geometry ) => {
+            let model_path = "./" + models[i]["path"]
+            await loader.loadAsync(model_path).then(( geometry ) => {
                 if (models[i]["rendr_type"] === "hidden") { return; }
 
                 let material = get_material(models[i]["color"], models[i]["rendr_type"]);
