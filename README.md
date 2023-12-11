@@ -31,31 +31,31 @@ Geometry is automatically reenerated based on the airfoil type and wing size.
 
 Airfoil data (profile geometry and aerodynamic coefficients) are collected from the open SplineCloud repositories with the script from the cq-uav library. Airfoil shapes are approximated with smoothing B-Splines, while sharp tails are thickened to avoid malformed geometry.
 
-## To Run Locally
+## Running Locally
 
-1. Clone this [repository](https://github.com/nomad-vagabond/streamlit-wing-design) with git
+  1. Clone this [repository](https://github.com/nomad-vagabond/streamlit-wing-design) with git.
 
-2. Open terminal and `cd` to th cloned repository
+  2. Open terminal and `cd` to the cloned repository.
 
 #### a) Using docker-compose (recommended)
 
-3. In terminal
+  3. In terminal
 
 ```
 docker-compose up --build
 ```
 
-4. In browser go to `http://localhost:8501/`
+  4. In browser go to `http://localhost:8501/`
 
 #### b) Using virtual environment
 
-3. Create virtual environment
+  3. Create virtual environment
 
 ```
 python -m venv venv
 ```
 
-4. Install dependencies
+  4. Install dependencies
 
 ```
 . ./venv/bin/activate
@@ -63,13 +63,13 @@ python -m venv venv
 pip install -r requirements.txt
 ```
 
-5. Run the streamlit app
+  5. Run the streamlit app
 
 ```
 streamlit run app/app.py
 ```
 
-6. A browser window (tab) with the app should appear.
+  6. A browser window (tab) with the app should appear.
 
 ---
 
