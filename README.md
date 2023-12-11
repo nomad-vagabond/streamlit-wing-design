@@ -33,43 +33,34 @@ Airfoil data (profile geometry and aerodynamic coefficients) are collected from 
 
 ## Running Locally
 
-  1. Clone this [repository](https://github.com/nomad-vagabond/streamlit-wing-design) with git.
+1\. Clone this [repository](https://github.com/nomad-vagabond/streamlit-wing-design) with git.
 
-  2. Open terminal and `cd` to the cloned repository.
+2\. Open terminal and `cd` to the cloned repository.
 
 #### a) Using docker-compose (recommended)
 
-  3. In terminal
+3\. In terminal
 
-```
-docker-compose up --build
-```
+    docker-compose up --build
 
-  4. In browser go to `http://localhost:8501/`
+4\. In browser go to `http://localhost:8501/`
 
 #### b) Using virtual environment
 
-  3. Create virtual environment
+3\. Create virtual environment
 
-```
-python -m venv venv
-```
+    python -m venv venv
 
-  4. Install dependencies
+4\. Install dependencies
 
-```
-. ./venv/bin/activate
+    source venv/bin/activate
+    pip install -r requirements.txt
 
-pip install -r requirements.txt
-```
+5\. Run the streamlit app
 
-  5. Run the streamlit app
+    streamlit run app/app.py
 
-```
-streamlit run app/app.py
-```
-
-  6. A browser window (tab) with the app should appear.
+6\. A browser window (tab) with the app should appear.
 
 ---
 
