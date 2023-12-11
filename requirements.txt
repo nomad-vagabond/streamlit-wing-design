@@ -3,4 +3,5 @@ markdown
 yattag
 pandas
 dict_hash
+python-slugify
 git+https://github.com/nomad-vagabond/cq-uav.git@0.0.6

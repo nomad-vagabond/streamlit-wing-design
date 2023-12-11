@@ -2,6 +2,7 @@ import math
 import csv
 import json
 from dict_hash import sha256
+from slugify import slugify
 
 import cadquery as cq
 import zipfile
@@ -38,7 +39,7 @@ class WingModelManager:
         self.fluid_props = FluidProperties(AIR_DENSITY, velocity, AIR_KINEMATIC_VISCOSITY)
 
         hash_keys = [
-            geom_params["airfoil_type"], 
+            slugify(geom_params["airfoil_type"]),
             geom_params["chord"], 
             geom_params["span"], 
             geom_params["shell_thickness"],

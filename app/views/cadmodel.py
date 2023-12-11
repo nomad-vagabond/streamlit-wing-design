@@ -43,14 +43,20 @@ def build_model_view(airfoils_data, geom_params, phys_params, dyn_params):
                 f"    shell: {shell_rel_mass:.2f}%, frame: {foam_rel_mass:.2f}%, box: {box_rel_mass:.2f}% \n"
                 f"{ltw_icon} Lift to weight ratio: {lift_to_weight:.2f}"
             )
-            st.button(label=f"Download Full Data")
+            with open(wing_console.props_path, "rb") as file:
+                st.download_button(
+                    label="Download Full Data",
+                    data=file,
+                    file_name=f"wing-console-{wing_console.model_hash}-{wing_console.props_hash}.csv",
+                    mime="application/zip"
+                )
 
         with col2:
             with open(wing_console.step_path, "rb") as file:
                 st.download_button(
                     label=f"Download STEP Model",
                     data=file,
-                    file_name=f'{wing_console.model_hash}.step',
+                    file_name=f'wing-console-{wing_console.model_hash}.step',
                     mime=f"model/step"
                 )
 
@@ -58,7 +64,7 @@ def build_model_view(airfoils_data, geom_params, phys_params, dyn_params):
                 st.download_button(
                     label=f"Download STL Models",
                     data=file,
-                    file_name=f'{wing_console.model_hash}-stl.zip',
+                    file_name=f'wing-console-{wing_console.model_hash}-stl.zip',
                     mime="application/zip"
                 )
             
