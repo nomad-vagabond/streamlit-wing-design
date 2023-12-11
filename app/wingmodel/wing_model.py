@@ -3,6 +3,7 @@ import csv
 import json
 from dict_hash import sha256
 import time
+import hashlib
 
 import cadquery as cq
 import zipfile
@@ -39,7 +40,7 @@ class WingModelManager:
         self.fluid_props = FluidProperties(AIR_DENSITY, velocity, AIR_KINEMATIC_VISCOSITY)
 
         hash_keys = [
-            geom_params["airfoil_type"], 
+            hashlib.md5(geom_params["airfoil_type"].encode('utf-8')).hexdigest(),
             geom_params["chord"], 
             geom_params["span"], 
             geom_params["shell_thickness"],
@@ -47,6 +48,7 @@ class WingModelManager:
         ]
 
         self.model_hash = "-".join(map(str, hash_keys))
+
         self.stl_path = os.path.join(STL_MODELS_DIR, f"wing-console-{self.model_hash}")
         # if not os.path.isdir(self.stl_path):
         #     os.makedirs(self.stl_path)
