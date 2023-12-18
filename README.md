@@ -10,6 +10,8 @@ Streamlit app based on the [CQ-UAV](https://github.com/nomad-vagabond/cq-uav) li
 
 ![](preview.png)
 
+Live app: https://rectangular-wing-generator.streamlit.app/
+
 ## Mathematical Model of The Wing Console
 
 ### Assumptions
