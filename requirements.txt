@@ -1,7 +1,9 @@
 streamlit==1.28.0 # version 1.29.0 contain bug that sets html background to white
+scipy==1.11.4
+numpy==1.26.4
 markdown
 yattag
 pandas
 dict_hash
 python-slugify
-git+https://github.com/nomad-vagabond/cq-uav.git@0.0.6
+git+https://github.com/nomad-vagabond/cq-uav.git@0.0.7

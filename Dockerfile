@@ -10,11 +10,12 @@ RUN apt-get update && apt-get install -y \
     curl \
     software-properties-common \
     git \
+    libxrender1 \
     && rm -rf /var/lib/apt/lists/*
 
-COPY requirements.txt /opt/st-wing-design/
+COPY . /opt/st-wing-design/
 
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir --prefer-binary -r requirements.txt
 
 EXPOSE 8501
 
